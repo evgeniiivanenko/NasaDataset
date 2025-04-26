@@ -1,0 +1,19 @@
+@NasaDataset.Api_HostAddress = http://localhost:5219
+
+#Get meteorites data
+GET {{NasaDataset.Api_HostAddress}}/api/meteorites
+Accept: application/json
+
+###
+
+#Get filters data
+
+GET {{NasaDataset.Api_HostAddress}}/api/meteorites/filters
+Accept: application/json
+
+###
+
+#Get groups data
+
+GET {{NasaDataset.Api_HostAddress}}/api/meteorites/groups?Key=year
+Accept: application/json

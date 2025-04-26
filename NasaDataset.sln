@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E5900D26-E281-4E87-B727-B1FD020217FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaDataset.Api", "src\NasaDataset.Api\NasaDataset.Api.csproj", "{D57AACE8-76F3-4AD0-B79E-5B5F5FE9F1BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaDataset.Infrastructure", "src\NasaDataset.Infrastructure\NasaDataset.Infrastructure.csproj", "{710B3C2C-C3C6-4640-9F32-38412AB7C3F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaDataset.Application", "src\NasaDataset.Application\NasaDataset.Application.csproj", "{DB42B35C-B576-466D-8C6D-308CBD0FF094}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaDataset.Domain", "src\NasaDataset.Domain\NasaDataset.Domain.csproj", "{67A2B1D7-20C8-44F3-A195-3B4D0C54A7C3}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "nasadataset.react", "src\NasaDataset.React\nasadataset.react.esproj", "{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D57AACE8-76F3-4AD0-B79E-5B5F5FE9F1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57AACE8-76F3-4AD0-B79E-5B5F5FE9F1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57AACE8-76F3-4AD0-B79E-5B5F5FE9F1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57AACE8-76F3-4AD0-B79E-5B5F5FE9F1BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710B3C2C-C3C6-4640-9F32-38412AB7C3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710B3C2C-C3C6-4640-9F32-38412AB7C3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710B3C2C-C3C6-4640-9F32-38412AB7C3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710B3C2C-C3C6-4640-9F32-38412AB7C3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB42B35C-B576-466D-8C6D-308CBD0FF094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB42B35C-B576-466D-8C6D-308CBD0FF094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB42B35C-B576-466D-8C6D-308CBD0FF094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB42B35C-B576-466D-8C6D-308CBD0FF094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67A2B1D7-20C8-44F3-A195-3B4D0C54A7C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67A2B1D7-20C8-44F3-A195-3B4D0C54A7C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67A2B1D7-20C8-44F3-A195-3B4D0C54A7C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67A2B1D7-20C8-44F3-A195-3B4D0C54A7C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D57AACE8-76F3-4AD0-B79E-5B5F5FE9F1BE} = {E5900D26-E281-4E87-B727-B1FD020217FB}
+		{710B3C2C-C3C6-4640-9F32-38412AB7C3F2} = {E5900D26-E281-4E87-B727-B1FD020217FB}
+		{DB42B35C-B576-466D-8C6D-308CBD0FF094} = {E5900D26-E281-4E87-B727-B1FD020217FB}
+		{67A2B1D7-20C8-44F3-A195-3B4D0C54A7C3} = {E5900D26-E281-4E87-B727-B1FD020217FB}
+		{69D41EF2-24A8-45D9-B4F9-F82CC6CB26D7} = {E5900D26-E281-4E87-B727-B1FD020217FB}
+	EndGlobalSection
+EndGlobal
