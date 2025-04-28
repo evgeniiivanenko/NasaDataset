@@ -26,7 +26,7 @@ namespace NasaDataset.Infrastructure
 
             builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             builder.Services.AddScoped<ApplicationDbContextInitialiser>();
-            builder.Services.AddScoped<IMeteoriteSyncService, MeteoriteSyncService>();
+            builder.Services.AddScoped<IMeteoriteSyncService, MeteoriteSyncFromFileService>();
             builder.Services.AddScoped<IMeteoriteRepository, MeteoriteRepository>();
             builder.Services.AddHostedService<MeteoriteSyncWorker>();
 
