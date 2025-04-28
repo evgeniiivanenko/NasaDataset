@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NasaDataset.Application.Common.Interfaces;
+﻿using NasaDataset.Application.Common.Interfaces;
 using NasaDataset.Application.Meteorites.Dtos;
 using NasaDataset.Application.Meteorites.Interfaces;
 using NasaDataset.Application.Meteorites.Mappers;
@@ -11,19 +10,19 @@ namespace NasaDataset.Application.Meteorites.Services
     {
 
         private readonly IMeteoriteSyncService _syncService;
-        private readonly IApplicationDbContext _context;
+        private readonly IMeteoriteRepository _repository;
 
 
-        public MeteoriteSyncHandler(IMeteoriteSyncService syncService, IApplicationDbContext context)
+        public MeteoriteSyncHandler(IMeteoriteSyncService syncService, IMeteoriteRepository repository)
         {
             _syncService = syncService;
-            _context = context;
+            _repository = repository;
         }
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             var externalData = await FetchExternalDataAsync(cancellationToken).ConfigureAwait(false);
-            var idsFromDatabase = await GetDatabaseExternalIdsAsync(cancellationToken).ConfigureAwait(false);
+            var idsFromDatabase = await _repository.GetExternalIdsAsync(cancellationToken).ConfigureAwait(false);
             var externalMeteoritesWithIds = ParseExternalMeteorites(externalData);
 
             var idsFromExternalData = externalMeteoritesWithIds.Select(x => x.Id).ToList();
@@ -32,9 +31,7 @@ namespace NasaDataset.Application.Meteorites.Services
             var idsToRemove = GetMissingItems(idsFromDatabase, idsFromExternalData);
 
             await AddNewMeteoritesAsync(externalMeteoritesWithIds, idsToAdd, cancellationToken).ConfigureAwait(false);
-            await RemoveDeletedMeteoritesAsync(idsToRemove, cancellationToken).ConfigureAwait(false);
-
-            await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await _repository.DeleteRangeAsync(idsToRemove, cancellationToken).ConfigureAwait(false);
         }
 
         private List<T> GetMissingItems<T>(
@@ -48,9 +45,6 @@ namespace NasaDataset.Application.Meteorites.Services
         private async Task<IEnumerable<CreateMeteoriteDto>> FetchExternalDataAsync(CancellationToken ct) =>
             await _syncService.FetchMeteoriteDataAsync(ct);
 
-        private async Task<List<ExternalMeteoriteId>> GetDatabaseExternalIdsAsync(CancellationToken ct) =>
-            await _context.Meteorites.Select(x => x.ExternalId).ToListAsync(ct);
-
         private List<(CreateMeteoriteDto Dto, ExternalMeteoriteId Id)> ParseExternalMeteorites(IEnumerable<CreateMeteoriteDto> dtos) =>
             dtos.Select(dto => (dto, new ExternalMeteoriteId(int.Parse(dto.ExternalId)))).ToList();
 
@@ -62,19 +56,7 @@ namespace NasaDataset.Application.Meteorites.Services
                 .ToList();
 
             if (toAdd.Any())
-                await _context.Meteorites.AddRangeAsync(toAdd, ct).ConfigureAwait(false);
-        }
-
-        private async Task RemoveDeletedMeteoritesAsync(IEnumerable<ExternalMeteoriteId> idsToRemove, CancellationToken ct)
-        {
-            if (!idsToRemove.Any()) return;
-
-            var toRemove = await _context.Meteorites
-                .Where(m => idsToRemove.Contains(m.ExternalId))
-                .ToListAsync(ct)
-                .ConfigureAwait(false);
-
-            _context.Meteorites.RemoveRange(toRemove);
+                await _repository.AddRangeAsync(toAdd, ct).ConfigureAwait(false);
         }
     }
 }

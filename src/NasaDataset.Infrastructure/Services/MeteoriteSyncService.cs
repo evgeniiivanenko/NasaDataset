@@ -1,8 +1,6 @@
 ﻿using NasaDataset.Application.Meteorites.Dtos;
 using NasaDataset.Application.Meteorites.Interfaces;
-using NasaDataset.Application.Meteorites.Mappers;
 using System.Net.Http.Json;
-using System.Text.Json;
 
 namespace NasaDataset.Infrastructure.Services
 {

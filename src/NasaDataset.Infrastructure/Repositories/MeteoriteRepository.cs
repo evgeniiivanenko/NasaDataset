@@ -4,7 +4,6 @@ using NasaDataset.Application.Common.Mappings;
 using NasaDataset.Application.Common.Models;
 using NasaDataset.Domain.Entities;
 using NasaDataset.Domain.ValueObjects;
-using System.Linq;
 
 namespace NasaDataset.Infrastructure.Repositories
 {
@@ -74,6 +73,9 @@ namespace NasaDataset.Infrastructure.Repositories
                 .OrderByDescending(x => x)
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<List<ExternalMeteoriteId>> GetExternalIdsAsync(CancellationToken cancellationToken)
+            => await _context.Meteorites.Select(x => x.ExternalId).ToListAsync(cancellationToken);
 
         public async Task<PaginatedList<TResult>> GetGroupedAsync<TResult>(ISpecification<Meteorite> specification, ISortingStrategy<TResult> sortingStrategy, IGroupingStrategy<Meteorite, TResult> groupingStrategy, int pageNumber, int pageSize, CancellationToken ct = default) where TResult : class
         {
