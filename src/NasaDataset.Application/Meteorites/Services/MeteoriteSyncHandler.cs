@@ -11,12 +11,14 @@ namespace NasaDataset.Application.Meteorites.Services
 
         private readonly IMeteoriteSyncService _syncService;
         private readonly IMeteoriteRepository _repository;
+        private readonly ICacheService _cacheService;
 
 
-        public MeteoriteSyncHandler(IMeteoriteSyncService syncService, IMeteoriteRepository repository)
+        public MeteoriteSyncHandler(IMeteoriteSyncService syncService, IMeteoriteRepository repository, ICacheService cacheService)
         {
             _syncService = syncService;
             _repository = repository;
+            _cacheService = cacheService;
         }
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
@@ -32,6 +34,9 @@ namespace NasaDataset.Application.Meteorites.Services
 
             await AddNewMeteoritesAsync(externalMeteoritesWithIds, idsToAdd, cancellationToken).ConfigureAwait(false);
             await _repository.DeleteRangeAsync(idsToRemove, cancellationToken).ConfigureAwait(false);
+
+            if(idsToAdd.Any() || idsToRemove.Any())
+                _cacheService.ClearMeteoriteCache();
         }
 
         private List<T> GetMissingItems<T>(
