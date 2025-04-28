@@ -3,6 +3,7 @@ import DropdownFilter from "../../components/filters/DropdownFilter";
 import Table from "../../components/table/Table";
 import PageSwitcher from "../../components/PageSwitcher";
 import Pagination from "../../components/Pagination";
+import { API_ENDPOINTS } from "../../api/endpoints";
 
 export default function GroupTablePage() {
   const [data, setData] = useState([]);
@@ -36,7 +37,7 @@ export default function GroupTablePage() {
       if (pageNumber) params.append("PageNumber", pageNumber);
 
       const response = await fetch(
-        `https://localhost:7113/api/meteorites/groups?${params.toString()}`
+        `${API_ENDPOINTS.METEORITES.GET_GROUP}?${params.toString()}`
       );
       if (!response.ok) throw new Error("Ошибка при загрузке данных");
 
@@ -63,7 +64,7 @@ export default function GroupTablePage() {
   };
 
   useEffect(() => {
-    fetch("https://localhost:7113/api/meteorites/filters")
+    fetch(API_ENDPOINTS.METEORITES.FILTERS)
       .then((res) => res.json())
       .then(setFilters)
       .catch(console.error);

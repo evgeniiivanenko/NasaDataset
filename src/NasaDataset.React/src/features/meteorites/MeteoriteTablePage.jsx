@@ -3,7 +3,7 @@ import DropdownFilter from "../../components/filters/DropdownFilter";
 import Table from "../../components/table/Table";
 import PageSwitcher from "../../components/PageSwitcher";
 import Pagination from "../../components/Pagination";
-
+import { API_ENDPOINTS } from "../../api/endpoints";
 export default function MeteoriteTablePage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ export default function MeteoriteTablePage() {
       if (pageSize) params.append("PageSize", pageSize);
 
       const response = await fetch(
-        `https://localhost:7113/api/meteorites?${params}`
+        `${API_ENDPOINTS.METEORITES.GET_WITH_PAGINATION}?${params}`
       );
       if (!response.ok) throw new Error("Ошибка при загрузке данных");
 
@@ -66,7 +66,7 @@ export default function MeteoriteTablePage() {
   };
 
   useEffect(() => {
-    fetch("https://localhost:7113/api/meteorites/filters")
+    fetch(API_ENDPOINTS.METEORITES.FILTERS)
       .then((res) => res.json())
       .then(setFilters)
       .catch(console.error);
@@ -82,7 +82,7 @@ export default function MeteoriteTablePage() {
     recclass,
     searchQuery,
     pageNumber,
-    pageSize
+    pageSize,
   ]);
 
   const columns = [
