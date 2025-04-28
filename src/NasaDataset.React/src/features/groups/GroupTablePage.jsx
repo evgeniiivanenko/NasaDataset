@@ -24,7 +24,10 @@ export default function GroupTablePage() {
   const [yearFrom, setYearFrom] = useState("");
   const [yearTo, setYearTo] = useState("");
 
-  const fetchData = async () => {
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY = 1000;
+
+  const fetchData = async (retryCount = 0) => {
     try {
       const params = new URLSearchParams({
         Key: groupKey,
@@ -45,7 +48,13 @@ export default function GroupTablePage() {
       setData(json.items || []);
       setTotalPages(json.totalPages || 1);
     } catch (err) {
-      setError(err.message);
+      if (retryCount < MAX_RETRIES) {
+        setTimeout(() => {
+          fetchData(retryCount + 1);
+        }, RETRY_DELAY * (retryCount + 1));
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
