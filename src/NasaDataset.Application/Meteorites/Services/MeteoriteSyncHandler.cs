@@ -3,6 +3,7 @@ using NasaDataset.Application.Meteorites.Dtos;
 using NasaDataset.Application.Meteorites.Interfaces;
 using NasaDataset.Application.Meteorites.Mappers;
 using NasaDataset.Domain.ValueObjects;
+using System.Diagnostics;
 
 namespace NasaDataset.Application.Meteorites.Services
 {
@@ -61,7 +62,16 @@ namespace NasaDataset.Application.Meteorites.Services
                 .ToList();
 
             if (toAdd.Any())
-                await _repository.AddRangeAsync(toAdd, ct).ConfigureAwait(false);
+            {
+                if (toAdd.Count() < 500)
+                {
+                    await _repository.AddRangeAsync(toAdd, ct).ConfigureAwait(false);
+                }
+                else
+                {
+                    await _repository.AddRangeWithHighPerformance(toAdd, ct).ConfigureAwait(false);
+                }
+            }
         }
     }
 }

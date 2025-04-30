@@ -10,6 +10,8 @@ using NasaDataset.Infrastructure.Data;
 using NasaDataset.Infrastructure.Repositories;
 using NasaDataset.Infrastructure.Services;
 using NasaDataset.Infrastructure.Workers;
+using Npgsql;
+using System.Data;
 
 namespace NasaDataset.Infrastructure
 {
@@ -23,6 +25,8 @@ namespace NasaDataset.Infrastructure
             {
                 options.UseNpgsql(connectionString);
             });
+
+            builder.Services.AddScoped<IDbConnection>(_ => new NpgsqlConnection(connectionString));
 
             builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             builder.Services.AddScoped<ApplicationDbContextInitialiser>();

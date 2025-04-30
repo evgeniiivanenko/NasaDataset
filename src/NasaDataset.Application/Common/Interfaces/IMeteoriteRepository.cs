@@ -23,9 +23,11 @@ namespace NasaDataset.Application.Common.Interfaces
             CancellationToken ct = default) where TResult : class;
 
         Task AddRangeAsync(IEnumerable<Meteorite> meteorites, CancellationToken ct = default);
+        Task AddRangeWithHighPerformance(IEnumerable<Meteorite> meteorites, CancellationToken ct = default);
         Task DeleteRangeAsync(List<ExternalMeteoriteId> idsToRemove, CancellationToken ct = default);
         Task<List<string>> GetDistinctRecclassesAsync(CancellationToken cancellationToken);
         Task<List<int>> GetDistinctYearsAsync(CancellationToken cancellationToken);
         Task<List<ExternalMeteoriteId>> GetExternalIdsAsync(CancellationToken cancellationToken);
+        Task DeleteAllAsync(CancellationToken cancellationToken);
     }
 }
