@@ -30,10 +30,13 @@ namespace NasaDataset.Infrastructure
 
             builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             builder.Services.AddScoped<ApplicationDbContextInitialiser>();
-            builder.Services.AddScoped<IMeteoriteSyncService, MeteoriteSyncFromFileService>();
+            builder.Services.AddScoped<IMeteoriteSyncService, MeteoriteSyncService>();
             builder.Services.AddScoped<IMeteoriteRepository, MeteoriteRepository>();
             builder.Services.AddHostedService<MeteoriteSyncWorker>();
 
+            builder.Services.Configure<WorkerSettings>(builder.Configuration.GetSection("WorkerSettings"));
+            builder.Services.Configure<MeteoriteSyncFromFileSettings>(builder.Configuration.GetSection("MeteoriteSyncFromFileSettings"));
+            builder.Services.Configure<MeteoriteSyncFromUrlSettings>(builder.Configuration.GetSection("MeteoriteSyncFromUrlSettings"));
         }
     }
 }

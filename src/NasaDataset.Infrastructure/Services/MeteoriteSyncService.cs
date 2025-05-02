@@ -1,5 +1,7 @@
-﻿using NasaDataset.Application.Meteorites.Dtos;
+﻿using Microsoft.Extensions.Options;
+using NasaDataset.Application.Meteorites.Dtos;
 using NasaDataset.Application.Meteorites.Interfaces;
+using NasaDataset.Infrastructure.Configuration;
 using System.Net.Http.Json;
 
 namespace NasaDataset.Infrastructure.Services
@@ -8,17 +10,22 @@ namespace NasaDataset.Infrastructure.Services
     {
 
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _urlForRequest;
 
-        public MeteoriteSyncService(IHttpClientFactory httpClientFactory)
+        public MeteoriteSyncService(IHttpClientFactory httpClientFactory, IOptions<MeteoriteSyncFromUrlSettings> options)
         {
             _httpClientFactory = httpClientFactory;
+            _urlForRequest = options.Value.Url;
         }
 
         public async Task<IEnumerable<CreateMeteoriteDto>> FetchMeteoriteDataAsync(CancellationToken cancellationToken)
         {
-            var client = _httpClientFactory.CreateClient("meteorite");
+            if(string.IsNullOrEmpty(_urlForRequest))
+                throw new ArgumentNullException(nameof(_urlForRequest));
 
-            var response = await client.GetFromJsonAsync<List<CreateMeteoriteDto>>("https://raw.githubusercontent.com/biggiko/nasa-dataset/refs/heads/main/y77d-th95.json", cancellationToken);
+            var client = _httpClientFactory.CreateClient();
+
+            var response = await client.GetFromJsonAsync<List<CreateMeteoriteDto>>(_urlForRequest, cancellationToken);
 
             return response ?? new();
         }

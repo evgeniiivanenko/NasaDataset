@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
 
 builder.AddInfrastructureServices();
 builder.AddApplicationServices();
-builder.Services.Configure<WorkerSettings>(builder.Configuration.GetSection("WorkerSettings"));
+
 builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
