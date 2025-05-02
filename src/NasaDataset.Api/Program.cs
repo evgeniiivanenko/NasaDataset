@@ -6,6 +6,7 @@ using NasaDataset.Application.Meteorites.Services;
 using NasaDataset.Infrastructure;
 using NasaDataset.Infrastructure.Configuration;
 using NasaDataset.Infrastructure.Data;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,14 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
+});
+
+builder.Host.UseSerilog((context, services, configuration) =>
+{
+    configuration
+     .ReadFrom.Configuration(context.Configuration)
+     .ReadFrom.Services(services)
+     .Enrich.FromLogContext();
 });
 
 builder.AddInfrastructureServices();
