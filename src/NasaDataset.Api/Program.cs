@@ -1,10 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using NasaDataset.Api.Middlewares;
 using NasaDataset.Application;
-using NasaDataset.Application.Meteorites.Interfaces;
-using NasaDataset.Application.Meteorites.Services;
 using NasaDataset.Infrastructure;
-using NasaDataset.Infrastructure.Configuration;
 using NasaDataset.Infrastructure.Data;
 using Serilog;
 

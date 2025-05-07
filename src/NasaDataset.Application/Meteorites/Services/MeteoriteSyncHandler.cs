@@ -24,8 +24,8 @@ namespace NasaDataset.Application.Meteorites.Services
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            var externalData = await FetchExternalDataAsync(cancellationToken).ConfigureAwait(false);
-            var idsFromDatabase = await _repository.GetExternalIdsAsync(cancellationToken).ConfigureAwait(false);
+            var externalData = await FetchExternalDataAsync(cancellationToken);
+            var idsFromDatabase = await _repository.GetExternalIdsAsync(cancellationToken);
             var externalMeteoritesWithIds = ParseExternalMeteorites(externalData);
 
             var idsFromExternalData = externalMeteoritesWithIds.Select(x => x.Id).ToList();
@@ -33,8 +33,8 @@ namespace NasaDataset.Application.Meteorites.Services
             var idsToAdd = GetMissingItems(idsFromExternalData, idsFromDatabase);
             var idsToRemove = GetMissingItems(idsFromDatabase, idsFromExternalData);
 
-            await AddNewMeteoritesAsync(externalMeteoritesWithIds, idsToAdd, cancellationToken).ConfigureAwait(false);
-            await _repository.DeleteRangeAsync(idsToRemove, cancellationToken).ConfigureAwait(false);
+            await AddNewMeteoritesAsync(externalMeteoritesWithIds, idsToAdd, cancellationToken);
+            await _repository.DeleteRangeAsync(idsToRemove, cancellationToken);
 
             if(idsToAdd.Any() || idsToRemove.Any())
                 _cacheService.ClearMeteoriteCache();
@@ -65,11 +65,11 @@ namespace NasaDataset.Application.Meteorites.Services
             {
                 if (toAdd.Count() < 500)
                 {
-                    await _repository.AddRangeAsync(toAdd, ct).ConfigureAwait(false);
+                    await _repository.AddRangeAsync(toAdd, ct);
                 }
                 else
                 {
-                    await _repository.AddRangeWithHighPerformance(toAdd, ct).ConfigureAwait(false);
+                    await _repository.AddRangeWithHighPerformance(toAdd, ct);
                 }
             }
         }

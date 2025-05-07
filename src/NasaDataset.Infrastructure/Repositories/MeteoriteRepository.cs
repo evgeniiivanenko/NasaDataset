@@ -113,10 +113,9 @@ namespace NasaDataset.Infrastructure.Repositories
             {
                 await _context.Meteorites
                 .Where(m => idsToRemove.Contains(m.ExternalId))
-                .ExecuteDeleteAsync(ct)
-                .ConfigureAwait(false);
+                .ExecuteDeleteAsync(ct);
 
-                await _context.SaveChangesAsync(ct).ConfigureAwait(false);
+                await _context.SaveChangesAsync(ct);
             }
         }
 
